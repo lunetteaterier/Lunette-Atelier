@@ -1,0 +1,128 @@
+/* LUNETTE ATELIER - Estilos principales */
+:root {
+    --negro: #0B0B0C;
+    --marfil: #F2F2F0;
+    --gris: #C7C7C7;
+    --plata: #BFC3C9;
+    --patagonia: #0F2A22;
+    --cobre: #A77A55;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--negro);
+    color: var(--marfil);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.header {
+    padding: 2rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--plata);
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--marfil);
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+/* Hero Section */
+.hero {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--gris);
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+/* Cards de Mezclas */
+.mezzclas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 3rem 0;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--plata);
+    border-radius: 4px;
+    padding: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--cobre);
+}
+
+.card h3 {
+    color: var(--marfil);
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: transparent;
+    color: var(--marfil);
+    border: 1px solid var(--plata);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: var(--plata);
+    color: var(--negro);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 3rem 0;
+    border-top: 1px solid var(--plata);
+    margin-top: 4rem;
+    color: var(--gris);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .mezzclas-grid {
+        grid-template-columns: 1fr;
+    }
+}
