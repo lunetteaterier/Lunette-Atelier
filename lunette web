@@ -1,0 +1,484 @@
+import React, { useState } from 'react';
+import { Menu, X, ChevronRight } from 'lucide-react';
+
+const LunetteWeb = () => {
+  const [currentPage, setCurrentPage] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const mezclas = [
+    {
+      id: 'hm-001',
+      nombre: 'Hierbas Mediterráneas',
+      codigo: 'HM-001',
+      emoji: '🌿',
+      tagline: 'Mezcla herbal clásica, sin sal añadida',
+      imagen: 'https://i.postimg.cc/gx2K8pSV/Captura-de-pantalla-2025-12-14-a-la(s)-1-09-22-a-m.png',
+      bajada: 'La frescura herbal del Mediterráneo, sin sal añadida, para sazonar a tu medida.',
+      descripcion: 'Mezcla herbal clásica, fresca y aromática, inspirada en la cocina mediterránea. No contiene sal añadida, por lo que permite sazonar con libertad y ajustar la sal a tu gusto.',
+      perfil: { sal: 0, picante: 0, sensacion: 'herbal, aromática, versátil' },
+      ingredientes: 'Orégano, albahaca seca, ajo granulado, cebolla deshidratada, tomillo, romero, pimienta negra, semillas de hinojo.',
+      usos: [
+        { categoria: 'Pastas y salsas', items: 'Pastas, lasañas, salsas de tomate' },
+        { categoria: 'Pizzas y panes', items: 'Pizzas, focaccias' },
+        { categoria: 'Verduras', items: 'Verduras asadas (zapallo, berenjena, pimentones)' },
+        { categoria: 'Proteínas', items: 'Pollo a la plancha o al horno' }
+      ],
+      comoUsar: [
+        { titulo: 'Sazonador directo', texto: 'Espolvorear al final de la cocción' },
+        { titulo: 'Marinada', texto: 'Mezclar con aceite y sal, reposar 20-30 minutos' }
+      ],
+      tip: 'Combina con aceite de oliva y limón para una vinagreta herbal instantánea.'
+    },
+    {
+      id: 'pg-001',
+      nombre: 'Pampa Grill Rub',
+      codigo: 'PG-001',
+      emoji: '🥩',
+      tagline: 'Rub tipo chimichurri seco premium',
+      imagen: 'https://i.postimg.cc/87zbMGKc/Captura-de-pantalla-2025-12-14-a-la(s)-1-08-36-a-m.png',
+      bajada: 'El sabor de la parrilla chilena en un rub elegante.',
+      descripcion: 'Rub tipo chimichurri seco premium, pensado para carnes a la parrilla y horno. Combina hierbas, ajo, tomate seco sobre sal de Cahuil.',
+      perfil: { sal: 2, picante: 1, sensacion: 'herbal, fresca, ligeramente ahumada' },
+      ingredientes: 'Sal de Cahuil, orégano, ajo, cebolla, tomate seco, paprika, pimienta negra, perejil, hinojo, laurel, nuez moscada.',
+      usos: [
+        { categoria: 'Carnes', items: 'Asados, entraña, lomo vetado' },
+        { categoria: 'Aves y cerdo', items: 'Pollo, cerdo, chorizos' },
+        { categoria: 'Verduras', items: 'Papas rústicas, champiñones' }
+      ],
+      comoUsar: [
+        { titulo: 'Rub seco', texto: 'Espolvorear sobre carne antes de cocinar' },
+        { titulo: 'Chimichurri rápido', texto: 'Mezclar con aceite y vinagre' }
+      ],
+      tip: 'Aplica 30 minutos antes de cocinar para que penetre.'
+    },
+    {
+      id: 'ch-001',
+      nombre: 'Cítricos y Hierbas Patagónicos',
+      codigo: 'CH-001',
+      emoji: '🍋',
+      tagline: 'Mezcla cítrica y herbal',
+      imagen: 'https://i.postimg.cc/75ZN04sb/Captura-de-pantalla-2025-12-14-a-la(s)-1-07-55-a-m.png',
+      bajada: 'Frescura cítrica para pescados y ensaladas.',
+      descripcion: 'Mezcla fresca y cítrica con sal rosada y mix de cítricos deshidratados. Perfecta para levantar sabores.',
+      perfil: { sal: 3, picante: 0, sensacion: 'cítrica, luminosa, aromática' },
+      ingredientes: 'Sal rosada, cítricos (limón, naranja, mandarina), orégano, ajo, romero, pimienta, tomillo.',
+      usos: [
+        { categoria: 'Pescados', items: 'Merluza, salmón, reineta, congrio' },
+        { categoria: 'Mariscos', items: 'Ceviches, tiraditos' },
+        { categoria: 'Ensaladas', items: 'Verdes, quinoa, legumbres' }
+      ],
+      comoUsar: [
+        { titulo: 'Sal cítrica', texto: 'Espolvorear sobre plato terminado' },
+        { titulo: 'Marinar', texto: 'Mezclar con jugo y aceite' }
+      ],
+      tip: 'Prueba sobre verduras asadas para un contraste delicioso.'
+    },
+    {
+      id: 'ea-001',
+      nombre: 'Estepa Austral Rub',
+      codigo: 'EA-001',
+      emoji: '🌾',
+      tagline: 'Rub cálido con merkén',
+      imagen: 'https://i.postimg.cc/183KwSCD/Captura-de-pantalla-2025-12-14-a-la(s)-1-09-03-a-m.png',
+      bajada: 'Sabor profundo inspirado en la cocina chilena.',
+      descripcion: 'Rub cálido y rústico con merkén, comino y ahumado. Ideal para carnes y cocciones largas.',
+      perfil: { sal: 2, picante: 2, sensacion: 'ahumado, especiado, cálido' },
+      ingredientes: 'Sal de Cahuil, paprika, ajo, cebolla, merkén, comino, orégano, pimientas, humo.',
+      usos: [
+        { categoria: 'Vacuno', items: 'Asados de tira, punta de ganso' },
+        { categoria: 'Cerdo y cordero', items: 'Al horno o parrilla' },
+        { categoria: 'Verduras', items: 'Papas rústicas, zapallo' }
+      ],
+      comoUsar: [
+        { titulo: 'Rub', texto: 'Frotar sobre carne con aceite' },
+        { titulo: 'Marinar', texto: 'Mezclar con cerveza o vino' }
+      ],
+      tip: 'Cocina a baja temperatura para desarrollar capas de sabor.'
+    },
+    {
+      id: 'sa-001',
+      nombre: 'Sal Ahumada Patagónica',
+      codigo: 'SA-001',
+      emoji: '🧂',
+      tagline: 'Sal ahumada para terminar',
+      imagen: 'https://i.postimg.cc/v4ZvfyqB/Captura-de-pantalla-2025-12-14-a-la(s)-1-08-24-a-m.png',
+      bajada: 'Toque ahumado elegante para finalizar platos.',
+      descripcion: 'Sal ahumada versátil pensada para terminar. Ahumado suave, perfecto para transformar preparaciones simples.',
+      perfil: { sal: 3, picante: 1, sensacion: 'salina, ahumada, aromática' },
+      ingredientes: 'Sal rosada, paprika, ajo, cebolla, pimientas, tomillo, romero, perejil, humo.',
+      usos: [
+        { categoria: 'Carnes', items: 'Para terminar a la parrilla' },
+        { categoria: 'Papas', items: 'Fritas, al horno, wedges' },
+        { categoria: 'Huevos', items: 'Revueltos, omelettes, tostadas' }
+      ],
+      comoUsar: [
+        { titulo: 'Sal de mesa', texto: 'Reemplaza sal común' },
+        { titulo: 'Toque final', texto: 'Espolvorear antes de servir' }
+      ],
+      tip: 'Prueba sobre paltas o palomitas para un toque gourmet.'
+    },
+    {
+      id: 'fa-001',
+      nombre: 'Fuego Austral Picante',
+      codigo: 'FA-001',
+      emoji: '🔥',
+      tagline: 'Rub picante elegante',
+      imagen: 'https://i.postimg.cc/ZW5Lpm75/Captura-de-pantalla-2025-12-14-a-la(s)-1-08-47-a-m.png',
+      bajada: 'Para quienes buscan calor con sabor.',
+      descripcion: 'Rub ahumado y picante con merkén. Calor persistente equilibrado con hierbas frescas.',
+      perfil: { sal: 2, picante: 3, sensacion: 'ahumado, picante, profundo' },
+      ingredientes: 'Sal rosada, merkén, ajo, paprika, cebolla, pimientas, cilantro, tomillo, hierbabuena, humo.',
+      usos: [
+        { categoria: 'Carnes rojas', items: 'Costillas, punta de ganso' },
+        { categoria: 'Aves', items: 'Alitas, trutros, pollo' },
+        { categoria: 'Verduras', items: 'Papas y verduras con fuego' }
+      ],
+      comoUsar: [
+        { titulo: 'Con moderación', texto: 'Aplica poco al inicio' },
+        { titulo: 'En pasta', texto: 'Mezcla con aceite' }
+      ],
+      tip: 'Equilibra con miel para dulce + picante + ahumado.'
+    }
+  ];
+
+  const renderStars = (level, max = 3) => {
+    return (
+      <div className="flex gap-1">
+        {[...Array(max)].map((_, i) => (
+          <div
+            key={i}
+            className={`w-2 h-2 rounded-full ${i < level ? 'bg-[#BFC3C9]' : 'bg-[#2A2A2C]'}`}
+          />
+        ))}
+      </div>
+    );
+  };
+
+  const HomePage = () => (
+    <div className="min-h-screen">
+      <section className="relative h-screen flex items-center justify-center px-6">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{backgroundImage: 'url(https://images.unsplash.com/photo-1596040033229-a0b8b5f9c1f8?w=1600&q=80)'}}
+        />
+        <div className="relative z-10 max-w-3xl text-center">
+          <div className="mb-12">
+            <img 
+              src="https://i.postimg.cc/02DWh7cH/lunette-logo-white-bg.png" 
+              alt="Lunette Atelier"
+              className="w-96 max-w-full mx-auto mb-12"
+            />
+          </div>
+          <p className="text-xl md:text-2xl leading-relaxed mb-12 text-[#F2F2F0]">
+            En Lunette Atelier trabajamos pequeñas partidas de mezclas de especias preparadas en la Patagonia chilena. Cada mezcla está pensada para cocinar todos los días con sabor gourmet, sin complicarse.
+          </p>
+          <button
+            onClick={() => setCurrentPage('mezclas')}
+            className="bg-transparent border border-[#BFC3C9] text-[#F2F2F0] px-8 py-4 text-sm tracking-widest hover:bg-[#BFC3C9] hover:text-[#0B0B0C] transition-all duration-300"
+          >
+            VER MEZCLAS
+          </button>
+        </div>
+      </section>
+
+      <section className="py-20 px-6 border-t border-[#2A2A2C]">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
+          <div className="text-center">
+            <div className="w-12 h-0.5 bg-[#BFC3C9] mx-auto mb-4" />
+            <h3 className="text-sm tracking-widest">Mezclas desde la Patagonia</h3>
+          </div>
+          <div className="text-center">
+            <div className="w-12 h-0.5 bg-[#BFC3C9] mx-auto mb-4" />
+            <h3 className="text-sm tracking-widest">Ingredientes claros</h3>
+          </div>
+          <div className="text-center">
+            <div className="w-12 h-0.5 bg-[#BFC3C9] mx-auto mb-4" />
+            <h3 className="text-sm tracking-widest">Para cocinar todos los días</h3>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+
+  const MezclasPage = () => (
+    <div className="min-h-screen py-20 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h1 className="font-serif text-4xl md:text-5xl mb-6">Nuestras Mezclas</h1>
+          <p className="text-[#C7C7C7] max-w-2xl mx-auto">
+            Seis mezclas con perfiles únicos, ingredientes claros y usos específicos.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {mezclas.map((mezcla) => (
+            <div
+              key={mezcla.id}
+              className="border border-[#2A2A2C] hover:border-[#BFC3C9] transition-all duration-300 cursor-pointer group"
+              onClick={() => setCurrentPage(mezcla.id)}
+            >
+              <div className="aspect-square overflow-hidden flex items-center justify-center bg-gradient-to-b from-white to-gray-50 p-4">
+                <img 
+                  src={mezcla.imagen} 
+                  alt={mezcla.nombre}
+                  className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    console.log('Error cargando imagen:', mezcla.nombre);
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+              <div className="p-6 bg-[#0B0B0C]">
+                <div className="text-3xl mb-3">{mezcla.emoji}</div>
+                <h3 className="font-serif text-xl mb-2">{mezcla.nombre}</h3>
+                <p className="text-[#C7C7C7] text-sm mb-4">{mezcla.tagline}</p>
+                <div className="flex items-center text-[#BFC3C9] text-sm">
+                  <span className="tracking-wider">Ver más</span>
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const MezclaDetailPage = ({ mezclaId }) => {
+    const mezcla = mezclas.find(m => m.id === mezclaId);
+    if (!mezcla) return null;
+
+    return (
+      <div className="min-h-screen">
+        <section className="relative min-h-[60vh] flex items-center justify-center bg-gradient-to-b from-white to-gray-50 py-12">
+          <div className="relative z-10 w-full max-w-2xl px-6">
+            <img 
+              src={mezcla.imagen} 
+              alt={mezcla.nombre}
+              className="w-full h-auto object-contain mx-auto"
+              style={{ maxHeight: '70vh' }}
+              onError={(e) => {
+                console.log('Error cargando imagen detalle:', mezcla.nombre);
+                e.target.style.display = 'none';
+              }}
+            />
+          </div>
+        </section>
+
+        <div className="bg-[#0B0B0C]">
+          <div className="text-center px-6 py-12 border-b border-[#2A2A2C]">
+            <div className="text-5xl mb-4">{mezcla.emoji}</div>
+            <h1 className="font-serif text-4xl md:text-5xl mb-4">{mezcla.nombre}</h1>
+            <p className="text-[#C7C7C7] text-sm tracking-widest">{mezcla.codigo}</p>
+            <p className="text-xl mt-6 italic text-[#C7C7C7]">{mezcla.bajada}</p>
+          </div>
+
+          <div className="max-w-4xl mx-auto px-6 py-16 space-y-16">
+            <section>
+              <p className="text-lg leading-relaxed text-[#C7C7C7]">{mezcla.descripcion}</p>
+            </section>
+
+            <div className="w-full h-px bg-[#2A2A2C]" />
+
+            <section>
+              <h2 className="font-serif text-2xl mb-6">Perfil de sabor</h2>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-[#C7C7C7]">Nivel de sal</span>
+                  {renderStars(mezcla.perfil.sal)}
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[#C7C7C7]">Picante</span>
+                  {renderStars(mezcla.perfil.picante)}
+                </div>
+                <div className="mt-4">
+                  <span className="text-[#C7C7C7]">Sensación: </span>
+                  <span className="text-[#F2F2F0] italic">{mezcla.perfil.sensacion}</span>
+                </div>
+              </div>
+            </section>
+
+            <div className="w-full h-px bg-[#2A2A2C]" />
+
+            <section>
+              <h2 className="font-serif text-2xl mb-6">Ingredientes</h2>
+              <p className="text-[#C7C7C7] leading-relaxed">{mezcla.ingredientes}</p>
+            </section>
+
+            <div className="w-full h-px bg-[#2A2A2C]" />
+
+            <section>
+              <h2 className="font-serif text-2xl mb-6">Usos recomendados</h2>
+              <div className="space-y-4">
+                {mezcla.usos.map((uso, idx) => (
+                  <div key={idx}>
+                    <h3 className="text-[#BFC3C9] mb-1 tracking-wide">{uso.categoria}</h3>
+                    <p className="text-[#C7C7C7]">{uso.items}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <div className="w-full h-px bg-[#2A2A2C]" />
+
+            <section>
+              <h2 className="font-serif text-2xl mb-6">Cómo usarla</h2>
+              <div className="space-y-6">
+                {mezcla.comoUsar.map((metodo, idx) => (
+                  <div key={idx}>
+                    <h3 className="text-[#BFC3C9] mb-2 tracking-wide">{metodo.titulo}</h3>
+                    <p className="text-[#C7C7C7]">{metodo.texto}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <div className="w-full h-px bg-[#2A2A2C]" />
+
+            <section className="bg-[#1A1A1C] p-8 border-l-2 border-[#BFC3C9]">
+              <h2 className="font-serif text-2xl mb-4">Tip pro</h2>
+              <p className="text-[#C7C7C7] leading-relaxed">{mezcla.tip}</p>
+            </section>
+
+            <div className="text-center pt-8">
+              <button
+                onClick={() => setCurrentPage('mezclas')}
+                className="text-[#BFC3C9] hover:text-[#F2F2F0] transition-colors tracking-widest text-sm"
+              >
+                ← VOLVER A MEZCLAS
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const ContactPage = () => (
+    <div className="min-h-screen py-20 px-6">
+      <div className="max-w-2xl mx-auto text-center">
+        <h1 className="font-serif text-4xl md:text-5xl mb-8">Contacto</h1>
+        <div className="w-24 h-0.5 bg-[#BFC3C9] mx-auto mb-12" />
+        <p className="text-[#C7C7C7] text-lg leading-relaxed mb-12">
+          ¿Tienes dudas sobre nuestras mezclas? Contáctanos.
+        </p>
+        <div className="bg-[#1A1A1C] p-8 border border-[#2A2A2C]">
+          <p className="text-[#C7C7C7] mb-6">
+            <span className="text-[#BFC3C9]">Email:</span> (PENDIENTE)
+          </p>
+          <p className="text-[#C7C7C7] mb-6">
+            <span className="text-[#BFC3C9]">WhatsApp:</span> (PENDIENTE)
+          </p>
+          <p className="text-[#C7C7C7]">
+            <span className="text-[#BFC3C9]">Redes:</span> (PENDIENTE)
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderPage = () => {
+    if (currentPage === 'home') return <HomePage />;
+    if (currentPage === 'mezclas') return <MezclasPage />;
+    if (currentPage === 'contacto') return <ContactPage />;
+    return <MezclaDetailPage mezclaId={currentPage} />;
+  };
+
+  return (
+    <div className="bg-[#0B0B0C] text-[#F2F2F0] min-h-screen font-sans">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B0B0C]/95 backdrop-blur-sm border-b border-[#2A2A2C]">
+        <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <button 
+            onClick={() => setCurrentPage('home')}
+            className="hover:opacity-80 transition-opacity"
+          >
+            <img 
+              src="https://i.postimg.cc/02DWh7cH/lunette-logo-white-bg.png" 
+              alt="Lunette Atelier"
+              className="h-12 w-auto"
+            />
+          </button>
+          
+          <div className="hidden md:flex gap-8 text-sm tracking-widest">
+            <button
+              onClick={() => setCurrentPage('home')}
+              className="hover:text-[#BFC3C9] transition-colors"
+            >
+              INICIO
+            </button>
+            <button
+              onClick={() => setCurrentPage('mezclas')}
+              className="hover:text-[#BFC3C9] transition-colors"
+            >
+              MEZCLAS
+            </button>
+            <button
+              onClick={() => setCurrentPage('contacto')}
+              className="hover:text-[#BFC3C9] transition-colors"
+            >
+              CONTACTO
+            </button>
+          </div>
+
+          <button
+            className="md:hidden"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X /> : <Menu />}
+          </button>
+        </nav>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-[#0B0B0C] border-t border-[#2A2A2C]">
+            <div className="px-6 py-4 space-y-4 text-sm tracking-widest">
+              <button
+                onClick={() => {
+                  setCurrentPage('home');
+                  setMobileMenuOpen(false);
+                }}
+                className="block w-full text-left hover:text-[#BFC3C9] transition-colors"
+              >
+                INICIO
+              </button>
+              <button
+                onClick={() => {
+                  setCurrentPage('mezclas');
+                  setMobileMenuOpen(false);
+                }}
+                className="block w-full text-left hover:text-[#BFC3C9] transition-colors"
+              >
+                MEZCLAS
+              </button>
+              <button
+                onClick={() => {
+                  setCurrentPage('contacto');
+                  setMobileMenuOpen(false);
+                }}
+                className="block w-full text-left hover:text-[#BFC3C9] transition-colors"
+              >
+                CONTACTO
+              </button>
+            </div>
+          </div>
+        )}
+      </header>
+
+      <main className="pt-16">
+        {renderPage()}
+      </main>
+
+      <footer className="border-t border-[#2A2A2C] py-12 px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <img 
+            src="https://i.postimg.cc/02DWh7cH/lunette-logo-white-bg.png" 
+            alt="Lunette Atelier"
+            className="w-64 max-w-full mx-auto mb-4"
+          />
+          <p className="text-[#C7C7C7] text-xs">Especias gourmet desde la Patagonia, Chile</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default LunetteWeb;
